@@ -4,4 +4,4 @@ pip install fpdf
 
 repsitoeio criado pra ter uma ideia.
 
-abrir na main, dar run python file, colocar a  de preferencia url e esperar o relatorio sair
+abrir na main, dar run python file, colocar a url de preferencia e esperar o relatorio sair
