@@ -1,4 +1,5 @@
-pip install fpdf selenium axe-selenium-python webdriver-manager
+selenium axe-selenium-python webdriver-manager
+
 pip install fpdf
 
 repsitoeio criado pra ter uma ideia.
