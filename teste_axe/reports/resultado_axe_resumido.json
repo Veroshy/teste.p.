@@ -1,0 +1,58 @@
+[
+  {
+    "regra": "aria-allowed-role",
+    "impacto": "minor",
+    "descricao": "Ensures role attribute has an appropriate value for the element",
+    "ajuda": "ARIA role must be appropriate for the element",
+    "elementos_afetados": 1
+  },
+  {
+    "regra": "autocomplete-valid",
+    "impacto": "serious",
+    "descricao": "Ensure the autocomplete attribute is correct and suitable for the form field",
+    "ajuda": "autocomplete attribute must be used correctly",
+    "elementos_afetados": 1
+  },
+  {
+    "regra": "color-contrast",
+    "impacto": "serious",
+    "descricao": "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
+    "ajuda": "Elements must have sufficient color contrast",
+    "elementos_afetados": 1
+  },
+  {
+    "regra": "label",
+    "impacto": "serious",
+    "descricao": "Ensures every form element has a label",
+    "ajuda": "Form elements must have labels",
+    "elementos_afetados": 2
+  },
+  {
+    "regra": "landmark-one-main",
+    "impacto": "moderate",
+    "descricao": "Ensures the page has only one main landmark and each iframe in the page has at most one main landmark",
+    "ajuda": "Page must have one main landmark",
+    "elementos_afetados": 1
+  },
+  {
+    "regra": "page-has-heading-one",
+    "impacto": "moderate",
+    "descricao": "Ensure that the page, or at least one of its frames contains a level-one heading",
+    "ajuda": "Page must contain a level-one heading",
+    "elementos_afetados": 1
+  },
+  {
+    "regra": "region",
+    "impacto": "moderate",
+    "descricao": "Ensures all page content is contained by landmarks",
+    "ajuda": "All page content must be contained by landmarks",
+    "elementos_afetados": 1
+  },
+  {
+    "regra": "skip-link",
+    "impacto": "moderate",
+    "descricao": "Ensure all skip links have a focusable target",
+    "ajuda": "The skip-link target should exist and be focusable",
+    "elementos_afetados": 3
+  }
+]
