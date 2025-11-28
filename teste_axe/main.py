@@ -7,7 +7,6 @@ import json
 import time
 import os
 
-# NOVA IMPORTAÇÃO: Trazer o gerador que criamos
 from gerador_relatorio import criar_pdf_humanizado
 
 def gerar_relatorio_resumido(resultados):
@@ -24,54 +23,62 @@ def gerar_relatorio_resumido(resultados):
     return resumo
 
 def avaliar_acessibilidade(url):
-    # Configuração do Chrome
+    # Configurações do Robô (Chrome)
     chrome_options = Options()
-    # chrome_options.add_argument("--headless") # Descomente se não quiser ver o navegador abrindo
+    # chrome_options.add_argument("--headless") # Tire o # se quiser que o navegador rode "escondido"
 
+    # Inicia o Robô
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
     try:
-        print(f"Acessando a seguinte url: {url}")
+        print(f"🤖 Robô iniciando análise em: {url}")
         driver.get(url)
-        time.sleep(2) 
+        time.sleep(2) # Espera carregar
 
+        # Inicia o Cérebro (Axe)
         axe = Axe(driver)
         axe.inject()
 
-        print("Fazendo análise de acessibilidade...")
+        print("🧠 Cérebro analisando acessibilidade...")
         resultados = axe.run()
 
+        # Pega a lista de erros
         violacoes = resultados["violations"]
-        print(f"Total de violações encontradas: {len(violacoes)}")
+        print(f"🚨 Total de violações encontradas: {len(violacoes)}")
 
-        # Cria pasta para relatórios
+        # --- SALVANDO OS DADOS (A Parte dos Arquivos) ---
+        
         if not os.path.exists("reports"):
             os.makedirs("reports")
 
-        # Salva os JSONs (Dados técnicos)
-        relatorio_completo = "reports/resultado_axe_completo.json"
-        relatorio_resumido = "reports/resultado_axe_resumido.json"
-
-        with open(relatorio_completo, "w", encoding="utf-8") as f:
+        # 1. Salva o JSON Técnico (Para devs/backup)
+        with open("reports/dados_tecnicos_axe.json", "w", encoding="utf-8") as f:
             json.dump(resultados, f, ensure_ascii=False, indent=2)
 
-        resumo = gerar_relatorio_resumido(resultados)
-        with open(relatorio_resumido, "w", encoding="utf-8") as f:
-            json.dump(resumo, f, ensure_ascii=False, indent=2)
-
-        print(f"Dados técnicos salvos na pasta 'reports'.")
-
-        # --- AQUI A MÁGICA ACONTECE ---
-        # Chama o seu gerador para criar o PDF com base nas violações encontradas
-        print("Gerando Relatório Humanizado em PDF...")
+        # 2. GERA O RELATÓRIO HUMANIZADO (O PDF)
+        print("📄 Gerando Relatório Humanizado em PDF...")
+        
+        # Aqui a gente chama a sua função e passa a URL e a lista de erros
         criar_pdf_humanizado(url, violacoes)
-        # ------------------------------
+        
+        print("-" * 30)
+        print("✅ PROCESSO FINALIZADO COM SUCESSO!")
+        print("Verifique o arquivo 'Relatorio_GuiaAcesso.pdf' na pasta.")
+        print("-" * 30)
 
         return resultados
 
+    except Exception as e:
+        print(f"❌ Ocorreu um erro: {e}")
+
     finally:
-        driver.quit()
+        driver.quit() # Fecha o navegador
 
 if __name__ == "__main__":
-    url = input("Digite a URL que você deseja avaliar: ")
-    avaliar_acessibilidade(url)
+    print("--- API GUIAACESSO (Versão Beta) ---")
+    url_alvo = input("Digite a URL do site para analisar (ex: https://www.google.com): ")
+    
+    if not url_alvo.startswith("http"):
+        url_alvo = "https://" + url_alvo
+        
+    avaliar_acessibilidade(url_alvo)
